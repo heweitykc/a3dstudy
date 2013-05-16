@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2013/5/14'</value>
+      <value>'2013/5/16'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,8 +32,8 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>D:\code\work\a3dstudy\a3dstudy\src\s1\src</path-element>
       <path-element>D:\code\work\away3d-core-fp11_4_1_1_Beta\src</path-element>
+      <path-element>D:\code\work\a3dstudy\a3dstudy\src\s1\src</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
@@ -44,7 +44,7 @@
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\code\work\a3dstudy\a3dstudy\src\s1\src\Main.as</path-element>
+    <path-element>D:\code\work\a3dstudy\a3dstudy\src\s1\src\MainGame.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
