@@ -5,6 +5,8 @@ package
 	import away3d.containers.View3D;
 	import away3d.controllers.HoverController;
 	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.filters.*;
+	
 	import flash.display.*;
 	import flash.events.Event;
 	
@@ -82,15 +84,16 @@ package
 			_map = new Map(_scene);
 			var role1:Role = new Role(_meshLoader.mesh,_meshLoader.vertexAnimationSet);
 			_map.addRole(role1, 0, 0);
-			role1.play("jump");
+			role1.play("stand");
 			role1.initMaterial(_picker);
 		}
 		
 		private function onEnterFrame(event:Event):void
 		{
 			_view.render();
+			if(_map) _map.render();			
 			_cameraController.update();
-			_light.update();
+			_light.update();			
 		}
 	}
 

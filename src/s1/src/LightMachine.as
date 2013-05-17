@@ -5,6 +5,7 @@ package
 	import away3d.entities.Mesh;
 	import away3d.events.MouseEvent3D;
 	import away3d.lights.DirectionalLight;
+	import away3d.lights.PointLight;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
 	/**
@@ -20,6 +21,7 @@ package
 		public var rotationY:Number;
 		
 		private var _light:DirectionalLight;
+		private var _light2:PointLight;
 		private var _cube:Mesh;
 		private var _arrow:Mesh;
 		private var _container:ObjectContainer3D;
@@ -31,6 +33,8 @@ package
 			var material2:ColorMaterial = new ColorMaterial(0xFFFFFF);
 			_cube = new Mesh(new CubeGeometry(50, 50, 50), material);
 			_arrow = new Mesh(new CubeGeometry(20, 20, 20), material2);
+			
+			_light2 = new PointLight();
 			
 			_container = new ObjectContainer3D();
 			_container.addChild(_cube);
