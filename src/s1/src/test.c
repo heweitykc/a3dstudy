@@ -1,7 +1,6 @@
-#include <stdlib.h>
-#include <math.h>
 #include <AS3/AS3.h>
 #include <Flash++.h>
+#include <math.h>
 using namespace AS3::ui;
 
 // Some global vars we'll use in various functions.
@@ -34,7 +33,7 @@ static var enterFrame(void *arg, var as3Args)
         if (universe_current[i] == 0)
         {
             if (livecount != 2 && livecount != 3)
-                universe_future[i] = 0xffffff;
+                universe_future[i] = 0xffffffff;
             else
                 universe_future[i] = 0;
         }
@@ -43,22 +42,19 @@ static var enterFrame(void *arg, var as3Args)
             if (livecount == 3)
                 universe_future[i] = 0;
             else
-                universe_future[i] = 0xffffff;
+                universe_future[i] = 0xffffffff;
         }
         uint32_t i2 = (uint32_t(i / xd) * 3 * xd + (i % xd)) * 3;
 
         for (j = 0; j < 4; j++)
         {
             vs[i2 + dir2[j]] = universe_current[i];
-			//ram->position = (i2 + dir2[j])*4;
-			//ram->writeUnsignedInt(universe_current[i]);
+			//inline_as3("trace(\"inline xd = \"+%0);" : : "r"(universe_current[i]));
         }
     }
-    //bmd->lock();
-    //bmd.setVector(bmd.rect, vs);
-	//bmd->setVector(bmd->rect,ram);
-	//bmd->fillRect(bmd->rect,0xCCCC00);
-    //bmd->unlock();
+    bmd->lock();
+	bmd->setPixels(bmd->rect, ram, vs); 
+    bmd->unlock();
     uint32_t* tmp = universe_current;
     universe_current = universe_future;
     universe_future = tmp;
@@ -78,7 +74,7 @@ int main(int argc, char **argv)
 	xd = 800/3;
 	yd = 600/3;
 	length = xd * yd;
-	AS3_Trace("hi");
+
 	dir[2] = xd;
 	dir[3] = -xd;
 	dir[4] = xd+1;
@@ -89,27 +85,33 @@ int main(int argc, char **argv)
 	dir2[2] = xd * 3;
 	dir2[3] = xd * 3 + 1;
 	inline_as3("trace(\"inline xd = \"+%0+\",yd=\"+%1);" : : "r"(xd),"r"(yd));
-	//bmd = flash::display::BitmapData::_new(xd * 3, yd * 3,false,0);
-	//flash::display::Bitmap myBitmap = flash::display::Bitmap::_new(bmd);
-	//stage->addChild(myBitmap);
+	bmd = flash::display::BitmapData::_new(xd * 3, yd * 3,false);
+	flash::display::Bitmap myBitmap = flash::display::Bitmap::_new(bmd);
+
+	flash::display::Sprite mySprite = flash::display::Sprite::_new();
+
+	mySprite->addChild(myBitmap);
+
+	stage->addChild(mySprite);
 
 	universe_current = (uint32_t*)malloc(4 * length);
 	universe_future = (uint32_t*)malloc(4 * length);
 	vs  = (uint32_t*)malloc(4 * length * 9);	
-	//ram = internal::get_ram();
-	
+	ram = internal::get_ram();
+
 	int i;
 	for (i = 0; i < length; i++)
 	{
-		//universe_current[i] = Math.random() < .5 ? 0 : 0xffffff;
-		inline_as3("%0=Math.random() < .5 ? 0 : 0xffffff;" : "=r"(universe_current[i]) : );
+		inline_as3("%0=Math.random() < .5 ? 0 : 0xffffffff;" : "=r"(universe_current[i]) : );
 	}
 	for (i = 0; i < length*9; i++)
 	{
-		vs[i] = 0x000000;
+		vs[i] = 0xffffffff;
 	}
 	stage->addEventListener(flash::events::Event::ENTER_FRAME, Function::_new(enterFrame, NULL));
 	
+	inline_as3("trace(\"numchild = \"+%0);" : : "r"(mySprite->numChildren));
+
 	AS3_GoAsync();
 	return 0;
 }
