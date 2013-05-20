@@ -29,6 +29,8 @@ package
 		public function LightMachine() 
 		{
 			_light = new DirectionalLight(0, -1, -1);
+			_light.ambient = 10;
+			_light.diffuse = 5;
 			var material:ColorMaterial = new ColorMaterial(0xFFFF00);
 			var material2:ColorMaterial = new ColorMaterial(0xFFFFFF);
 			_cube = new Mesh(new CubeGeometry(50, 50, 50), material);
