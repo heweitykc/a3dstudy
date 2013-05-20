@@ -1,0 +1,9 @@
+比较
+ - hello.swf, test.c, (flascc移植的GameOfLife)
+ - wgXC.swf, wgXC.as  (as3版GameOfLife)
+
+wgXC.swf在fp11.1上 ,比在11.6上要慢20%。
+hello.swf在 fp11.1上占用内存90M,在11.6上占用内存250M。
+
+
+
