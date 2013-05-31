@@ -13,7 +13,8 @@ package
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import net.hires.debug.Stats;
+	import flash.text.*;
+	
 	/**
 	 * ...
 	 * @author lizhi https://twitter.com/lizhi525
@@ -56,9 +57,6 @@ package
 				vs[i] = 0xffffff;
 			}
 			addEventListener(Event.ENTER_FRAME, enterFrame);
-			
-			var stats:Stats = new Stats;
-			addChild(stats);
 		}
 		
 		private function enterFrame(e:Event):void

@@ -49,7 +49,7 @@ static var enterFrame(void *arg, var as3Args)
         for (j = 0; j < 4; j++)
         {
             vs[i2 + dir2[j]] = universe_current[i];
-			//inline_as3("trace(\"inline xd = \"+%0);" : : "r"(universe_current[i]));
+			inline_as3("trace(\"inline xd = \"+%0);" : : "r"(universe_current[i]));
         }
     }
     bmd->lock();
