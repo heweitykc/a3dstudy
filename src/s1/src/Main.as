@@ -10,6 +10,7 @@ package
 	 * ...
 	 * @author lizhi http://game-develop.net/
 	 */
+	[SWF(width=800,height=600,frameRate=60)]
 	public class Main extends Sprite
 	{
 		private var stage3d:Stage3D;
@@ -55,10 +56,12 @@ package
 			]);
 			vertextBuffer = c3d.createVertexBuffer(vertices.length / 6, 6);
 			vertextBuffer.uploadFromVector(vertices, 0, vertices.length / 6);
-			
+			c3d.setVertexBufferAt(0, vertextBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
+						
 			indices = Vector.<uint>([0, 1, 2]);
 			indexBuffer = c3d.createIndexBuffer(indices.length);
 			indexBuffer.uploadFromVector(indices, 0, 3);
+			c3d.setVertexBufferAt(1, vertextBuffer, 3, Context3DVertexBufferFormat.FLOAT_3);
 			
 			var vertexShaderAssembler:AGALMiniAssembler = new AGALMiniAssembler();
 			var fragShaderAssembler:AGALMiniAssembler = new AGALMiniAssembler();
@@ -70,20 +73,20 @@ package
 			);
 			program = c3d.createProgram();
 			program.upload(vertexShaderAssembler.agalcode, fragShaderAssembler.agalcode);
+			c3d.setProgram(program);
+			
+			c3d.clear(0, 0, 0, 1);
+			var m:Matrix3D = new Matrix3D();		
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, m, true);
+			c3d.drawTriangles(indexBuffer);
+			c3d.present();
 			
 			this.addEventListener(Event.ENTER_FRAME, onRender);			
 		}
 		
 		protected function onRender(evt:Event):void
 		{
-			c3d.clear(0, 0, 0, 1);
-			c3d.setVertexBufferAt(0, vertextBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
-			c3d.setVertexBufferAt(1, vertextBuffer, 3, Context3DVertexBufferFormat.FLOAT_3);
-			c3d.setProgram(program);
-			var m:Matrix3D = new Matrix3D();		
-			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, m, true);
-			c3d.drawTriangles(indexBuffer);
-			c3d.present();
+			
 		}
 	}
 	
